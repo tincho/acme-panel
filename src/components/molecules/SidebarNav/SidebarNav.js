@@ -8,22 +8,29 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import AssignmentIcon from "@material-ui/icons/Assignment";
 
-export default function SidebarNav() {
+export default function SidebarNav({ subheaderText, items }) {
   return (
     <List>
-      <ListSubheader inset>Settings</ListSubheader>
-      <ListItemLink
-        to="/"
-        primary="Dashboard"
-        icon={<DashboardIcon />}
-        activeOnlyWhenExact={true}
-      />
-      <ListItemLink to="/alerts" primary="Alerts" icon={<AssignmentIcon />} />
+      <ListSubheader inset>{subheaderText}</ListSubheader>
+      <>
+        {items.map(({ path, text, icon, activeOnlyWhenExact }) => (
+          <ListItemLink
+            key={path}
+            to={path}
+            primary={text}
+            icon={icon}
+            activeOnlyWhenExact={!!activeOnlyWhenExact}
+          />
+        ))}
+      </>
     </List>
   );
+}
+
+SidebarNav.propTypes = {
+  subheaderText: PropTypes.string,
+  items: PropTypes.array
 }
 
 function ListItemLink({ to, primary, icon, activeOnlyWhenExact }) {
