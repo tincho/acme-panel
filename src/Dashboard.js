@@ -2,32 +2,48 @@ import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+
 import Drawer from "@material-ui/core/Drawer";
 import Box from "@material-ui/core/Box";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import Paper from "@material-ui/core/Paper";
+
 import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import { mainListItems, secondaryListItems } from "./listItems";
+
+import NotificationsBadge from "./components/atoms/NotificationsBadge";
+import Alerts from "./components/organisms/Alerts";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}.
+      {new Date().getFullYear()}{" "}
+      <small>
+        {"Made by "}
+        <Link color="inherit" href="https://github.com/tincho/">
+          <code>@mrtinsal</code>
+        </Link>
+      </small>
+      {" with ❤ for "}
+      <Link color="inherit" href="https://atixlabs.com/">
+        AtixLabs
+      </Link>
     </Typography>
   );
 }
@@ -104,14 +120,19 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
+  fixedHeight: {
+    height: 240,
   },
 }));
 
 export default function Dashboard() {
   const classes = useStyles();
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -147,13 +168,9 @@ export default function Dashboard() {
             noWrap
             className={classes.title}
           >
-            Dashboard
+            Amazing Center for Monitoring Everything
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <NotificationsBadge count={4} />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -169,51 +186,47 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+        <List>
+          <ListSubheader inset>Settings</ListSubheader>
+          <ListItem button>
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Alerts" />
+          </ListItem>
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            <A />
-            <B />
-            <C />
-          </Grid>
 
+          <Grid item xs={12} md={6}>
+              <Paper className={fixedHeightPaper}>
+                {"2 / 10 active alerts"}
+              </Paper>
+            </Grid>
+            {/* Recent Deposits */}
+            <Grid item xs={12} md={6}>
+              <Paper className={fixedHeightPaper}>
+                {"To Be Implemented"}
+              </Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Alerts />
+            </Grid>
+          </Grid>
           <Box pt={4}>
             <Copyright />
           </Box>
         </Container>
       </main>
     </div>
-  );
-}
-
-function A() {
-  const classes = useStyles();
-  return (
-    <Grid item xs={12} md={8} lg={9}>
-      <Paper className={classes.paper}>Chart</Paper>
-    </Grid>
-  );
-}
-
-function B() {
-  const classes = useStyles();
-  return (
-    <Grid item xs={12} md={4} lg={3}>
-      <Paper className={classes.paper}>Deposits</Paper>
-    </Grid>
-  );
-}
-
-function C() {
-  const classes = useStyles();
-  return (
-    <Grid item xs={12}>
-      <Paper className={classes.paper}>Orders</Paper>
-    </Grid>
   );
 }
