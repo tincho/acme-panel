@@ -14,7 +14,7 @@ export default function NotificationsBadge({ count, onClick, ...props }) {
   const safeCount = Math.max(min, ~~count) // fallback to 0 if below min
   let content = (safeCount > max) ? `${max}+` : safeCount
   return (
-    <IconButton color="inherit" onClick={onClick}>
+    <IconButton color="inherit" onClick={onClick} title={safeCount}>
       <Badge badgeContent={content} color="secondary">
         <NotificationsIcon />
       </Badge>
