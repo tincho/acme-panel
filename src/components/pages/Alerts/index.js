@@ -1,2 +1,2 @@
-import AlertsPage from "./Alerts";
-export default AlertsPage;
+import AlarmsPage from "./Alarms";
+export default AlarmsPage;

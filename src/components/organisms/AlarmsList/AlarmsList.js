@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -14,6 +15,49 @@ const useStyles = makeStyles({
   },
 });
 
+function AlarmsList({ alarms }) {
+  const classes = useStyles();
+
+  return (
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="alarms list">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Metric&#39;s source</TableCell>
+            <TableCell>Metric</TableCell>
+            <TableCell>Trigger condition</TableCell>
+            <TableCell>Status</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {alarms.map((alarm) => (
+            <TableRow key={alarm.name}>
+              <TableCell component="th" scope="row">
+                {alarm.name}
+              </TableCell>
+              <TableCell>{alarm.source}</TableCell>
+              <TableCell>{alarm.metric}</TableCell>
+              <TableCell>
+                {alarm.trigger}
+              </TableCell>
+              <TableCell>{capitalize(alarm.paused)}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+AlarmsList.propTypes = {
+  alarms: PropTypes.arrayOf(PropTypes.object)
+}
+
+function capitalize(str) {
+  const [first, ...rest] = [...String(str)];
+  return `${first.toUpperCase()+rest.join('').toLowerCase()}`
+}
+
 function createData(name, source, metric, trigger, paused) {
   return { name, source, metric, trigger, paused };
 }
@@ -28,42 +72,8 @@ const rows = [
   ),
 ];
 
-export default function Alerts() {
-  const classes = useStyles();
-
-  const capitalize = str => {
-    const [first, ...rest] = [...String(str)];
-    return `${first.toUpperCase()+rest.join('').toLowerCase()}`
-  }
-
-  return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="alerts list">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Metric&#39;s source</TableCell>
-            <TableCell>Metric</TableCell>
-            <TableCell>Trigger condition</TableCell>
-            <TableCell>Status</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell>{row.source}</TableCell>
-              <TableCell>{row.metric}</TableCell>
-              <TableCell>
-                {row.trigger}
-              </TableCell>
-              <TableCell>{capitalize(row.paused)}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+// eslint-disable-next-line react/display-name
+export default function() {
+  return <AlarmsList alarms={rows} />
 }
+

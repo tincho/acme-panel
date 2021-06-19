@@ -24,6 +24,8 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import NotificationsBadge from "./components/atoms/NotificationsBadge";
 import SidebarNav from "./components/molecules/SidebarNav";
 
+import useNotifications from './useNotifications'
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -109,8 +111,18 @@ export default function AppShell({ children }) {
 
   const sidebarItems = [
     { path: "/", text: "Dashboard", activeOnlyWhenExact: true, icon: <DashboardIcon /> },
-    { path: "/alerts", text: "Alerts", icon: <AssignmentIcon /> },
+    { path: "/alarms", text: "Alarms", icon: <AssignmentIcon /> },
   ]
+
+  const pollNotificationsDelay = 5000
+  //   const pollNotificationsDelay = null
+  const { count: notificationsCount, delay, setDelay } = useNotifications(pollNotificationsDelay)
+  const toggleNotif = () => {
+    setDelay(delay === null ? pollNotificationsDelay : null)
+  }
+  const onClickNotifications = () => {
+    toggleNotif()
+  }
 
   return (
     <div className={classes.root}>
@@ -141,7 +153,7 @@ export default function AppShell({ children }) {
           >
             Amazing Center for Monitoring Everything
           </Typography>
-          <NotificationsBadge count={4} />
+          <NotificationsBadge count={notificationsCount} onClick={onClickNotifications} />
         </Toolbar>
       </AppBar>
       <Drawer

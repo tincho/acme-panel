@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AppShell from "./AppShell";
 
 import Dashboard from "./components/pages/Dashboard";
-import Alerts from "./components/pages/Alerts";
+import Alarms from "./components/pages/Alarms";
 
 function App() {
   return (
@@ -18,8 +18,8 @@ function App() {
               <Route exact path="/">
                 <Dashboard />
               </Route>
-              <Route path="/alerts">
-                <Alerts />
+              <Route path="/alarms">
+                <Alarms />
               </Route>
             </Switch>
           </AppShell>

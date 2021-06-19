@@ -2,15 +2,20 @@
 
 A customer asked us to help them to develop a [Grafana](https://grafana.com) clone. 
 
-Grafana is a tool to monitor, create alerts and display dashboards on top of different backends (Prometheus, Influx, Graphite). 
+Grafana is a tool to monitor, create alarms and display dashboards on top of different backends (Prometheus, Influx, Graphite). 
 
-The first user stories we want to tackle are related to alerts.
+The first user stories we want to tackle are related to alarms.
 
-When configuring an alert, we are defining certain system conditions the backend should monitor such as CPU or Memory usage percentage.
+When configuring an alarm, we are defining certain system conditions the backend should monitor such as CPU or Memory usage percentage.
 
 Once those conditions are met, the backend will turn that alarm on and notify all the recipients about it.
 
 Alarms cannot be turned off as they automatically shut down once the system status changes and the trigger conditions are not met anymore
+
+## Conventions
+
+* Using [Semantic Commit Messages](https://www.conventionalcommits.org/en/v1.0.0/)
+* 
 
 ## Available Scripts
 

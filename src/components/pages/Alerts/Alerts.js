@@ -1,10 +1,10 @@
 import Grid from "@material-ui/core/Grid";
-import Alerts from "../../organisms/Alerts";
+import AlarmsList from "../../organisms/AlarmsList";
 
-export default function AlertsPage() {
+export default function AlarmsPage() {
   return (
     <Grid item xs={12}>
-      <Alerts />
+      <AlarmsList />
     </Grid>
   );
 }
