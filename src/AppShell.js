@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,15 +8,6 @@ import Drawer from "@material-ui/core/Drawer";
 import Box from "@material-ui/core/Box";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Paper from "@material-ui/core/Paper";
-
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import AssignmentIcon from "@material-ui/icons/Assignment";
 
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
@@ -27,26 +19,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Grid from "@material-ui/core/Grid";
 
 import NotificationsBadge from "./components/atoms/NotificationsBadge";
-import Alerts from "./components/organisms/Alerts";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      {new Date().getFullYear()}{" "}
-      <small>
-        {"Made by "}
-        <Link color="inherit" href="https://github.com/tincho/">
-          <code>@mrtinsal</code>
-        </Link>
-      </small>
-      {" with ❤ for "}
-      <Link color="inherit" href="https://atixlabs.com/">
-        AtixLabs
-      </Link>
-    </Typography>
-  );
-}
+import SidebarNav from "./components/molecules/SidebarNav";
 
 const drawerWidth = 240;
 
@@ -118,20 +91,10 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
-  fixedHeight: {
-    height: 240,
-  },
 }));
 
-export default function Dashboard() {
+export default function AppShell({ children }) {
   const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -186,41 +149,13 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          <ListSubheader inset>Settings</ListSubheader>
-          <ListItem button>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Alerts" />
-          </ListItem>
-        </List>
+        <SidebarNav />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-
-          <Grid item xs={12} md={6}>
-              <Paper className={fixedHeightPaper}>
-                {"2 / 10 active alerts"}
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={6}>
-              <Paper className={fixedHeightPaper}>
-                {"To Be Implemented"}
-              </Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Alerts />
-            </Grid>
+            {children}
           </Grid>
           <Box pt={4}>
             <Copyright />
@@ -228,5 +163,28 @@ export default function Dashboard() {
         </Container>
       </main>
     </div>
+  );
+}
+
+AppShell.propTypes = {
+  children: PropTypes.element,
+};
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      {new Date().getFullYear()}{" "}
+      <small>
+        {"Made by "}
+        <Link color="inherit" href="https://github.com/tincho/">
+          <code>@mrtinsal</code>
+        </Link>
+      </small>
+      {" with ❤ for "}
+      <Link color="inherit" href="https://atixlabs.com/">
+        AtixLabs
+      </Link>
+    </Typography>
   );
 }
