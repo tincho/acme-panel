@@ -14,7 +14,6 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
 
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -23,6 +22,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 
 import NotificationsBadge from "./components/atoms/NotificationsBadge";
 import SidebarNav from "./components/molecules/SidebarNav";
+import Copyright from "./components/atoms/Copyright";
 
 import useNotifications from './useNotifications'
 
@@ -190,21 +190,3 @@ AppShell.propTypes = {
   children: PropTypes.element,
 };
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      {new Date().getFullYear()}{" "}
-      <small>
-        {"Made by "}
-        <Link color="inherit" href="https://github.com/tincho/">
-          <code>@mrtinsal</code>
-        </Link>
-      </small>
-      {" with ❤ for "}
-      <Link color="inherit" href="https://atixlabs.com/">
-        AtixLabs
-      </Link>
-    </Typography>
-  );
-}
