@@ -8,72 +8,126 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import PauseIcon from "@material-ui/icons/Pause";
+import PlayIcon from "@material-ui/icons/PlayArrow";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
   },
-});
+  actionsCol: {
+    borderLeft: `1px solid ${theme.palette.primary.light}`,
+    width: "20%",
+    textAlign: "center",
+    "& button": {
+      padding: theme.spacing(1),
+    },
+  },
+}));
 
-function AlarmsList({ alarms }) {
+export default function AlarmsList({
+  alarms,
+  deleteAlarm: onClickDelete,
+  pauseAlarm: onClickPause,
+  resumeAlarm: onClickResume,
+}) {
   const classes = useStyles();
+
+  const actionBtns = { false: PauseBtn, true: ResumeBtn };
+
+  const showAlarms = alarms.filter(() => true); // to be implemented
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="alarms list">
+      <Table className={classes.table} aria-label="alarms list" size="small">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell>Metric&#39;s source</TableCell>
             <TableCell>Metric</TableCell>
-            <TableCell>Trigger condition</TableCell>
-            <TableCell>Status</TableCell>
+            <TableCell>Trigger</TableCell>
+            <TableCell>Paused</TableCell>
+            <TableCell className={classes.actionsCol} align="center">
+              Actions
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {alarms.map((alarm) => (
-            <TableRow key={alarm.name}>
-              <TableCell component="th" scope="row">
-                {alarm.name}
-              </TableCell>
-              <TableCell>{alarm.source}</TableCell>
-              <TableCell>{alarm.metric}</TableCell>
-              <TableCell>
-                {alarm.trigger}
-              </TableCell>
-              <TableCell>{capitalize(alarm.paused)}</TableCell>
-            </TableRow>
-          ))}
+          {showAlarms.map(({ id, name, source, metric, trigger, paused }) => {
+            const ActionButton = actionBtns[paused];
+            return (
+              <TableRow key={id}>
+                <TableCell component="th" scope="row">
+                  {name}
+                </TableCell>
+                <TableCell>{source}</TableCell>
+                <TableCell>{metric}</TableCell>
+                <TableCell>{trigger}</TableCell>
+                <TableCell>{capitalize(paused)}</TableCell>
+                <TableCell className={classes.actionsCol} size="small">
+                  <ActionButton
+                    onClickPause={() => onClickPause(id)}
+                    onClickResume={() => onClickResume(id)}
+                    alarmId={id}
+                  />
+                  <IconButton
+                    size="small"
+                    title="Edit"
+                    aria-label="edit"
+                    disabled
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    title="Delete"
+                    aria-label="delete"
+                    onClick={() => onClickDelete(id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>
   );
 }
 AlarmsList.propTypes = {
-  alarms: PropTypes.arrayOf(PropTypes.object)
+  alarms: PropTypes.arrayOf(PropTypes.object),
+  deleteAlarm: PropTypes.function,
+  pauseAlarm: PropTypes.function,
+  resumeAlarm: PropTypes.function,
+};
+
+function PauseBtn({ onClickPause }) {
+  return (
+    <IconButton size="small" onClick={onClickPause}>
+      <PauseIcon />
+    </IconButton>
+  );
 }
+PauseBtn.propTypes = {
+  onClickPause: PropTypes.function,
+};
+
+function ResumeBtn({ onClickResume }) {
+  return (
+    <IconButton size="small" onClick={onClickResume}>
+      <PlayIcon />
+    </IconButton>
+  );
+}
+ResumeBtn.propTypes = {
+  onClickResume: PropTypes.function,
+};
 
 function capitalize(str) {
   const [first, ...rest] = [...String(str)];
-  return `${first.toUpperCase()+rest.join('').toLowerCase()}`
+  return `${first.toUpperCase() + rest.join("").toLowerCase()}`;
 }
-
-function createData(name, source, metric, trigger, paused) {
-  return { name, source, metric, trigger, paused };
-}
-
-const rows = [
-  createData(
-    "Kryptonite Levels in Technosfere",
-    "Atlantic Server",
-    "kryptokens",
-    "> 9000",
-    false
-  ),
-];
-
-// eslint-disable-next-line react/display-name
-export default function() {
-  return <AlarmsList alarms={rows} />
-}
-
