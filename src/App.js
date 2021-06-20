@@ -7,6 +7,7 @@ import AppShell from "./AppShell";
 
 import Dashboard from "./components/pages/Dashboard";
 import Alarms from "./components/pages/Alarms";
+import NotFound from "./components/pages/NotFound";
 
 function App() {
   return (
@@ -15,12 +16,9 @@ function App() {
         <Router>
           <AppShell>
             <Switch>
-              <Route exact path="/">
-                <Dashboard />
-              </Route>
-              <Route path="/alarms">
-                <Alarms />
-              </Route>
+              <Route path="/" component={Dashboard} exact />
+              <Route path="/alarms" component={Alarms} />
+              <Route component={NotFound} />
             </Switch>
           </AppShell>
         </Router>
