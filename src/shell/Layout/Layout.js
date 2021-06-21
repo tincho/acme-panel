@@ -20,11 +20,11 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 
-import NotificationsBadge from "./components/atoms/NotificationsBadge";
-import SidebarNav from "./components/molecules/SidebarNav";
-import Copyright from "./components/atoms/Copyright";
+import NotificationsBadge from "../NotificationsBadge";
+import SidebarNav from "../SidebarNav";
+import Copyright from "../Copyright";
 
-import { useAlarms } from "./alarmsContext";
+import { useAlarms } from "../alarmsContext";
 
 const drawerWidth = 240;
 

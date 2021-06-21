@@ -1,14 +1,14 @@
 import { ThemeProvider } from "@material-ui/core/styles";
-import defaultTheme from "./theme";
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import AppShell from "./AppShell";
+import { AlarmsProvider } from "./shell/alarmsContext";
 
-import Dashboard from "./components/pages/Dashboard";
-import Alarms from "./components/pages/Alarms";
-import NotFound from "./components/pages/NotFound";
-import { AlarmsProvider } from "./alarmsContext";
+import defaultTheme from "./shell/theme";
+import Layout from "./shell/Layout";
+
+import Dashboard from "./pages/Dashboard";
+import Alarms from "./pages/Alarms";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -16,13 +16,13 @@ function App() {
       <ThemeProvider theme={defaultTheme}>
         <Router>
           <AlarmsProvider>
-            <AppShell>
+            <Layout>
               <Switch>
                 <Route path="/" component={Dashboard} exact />
                 <Route path="/alarms" component={Alarms} />
                 <Route component={NotFound} />
               </Switch>
-            </AppShell>
+            </Layout>
           </AlarmsProvider>
         </Router>
       </ThemeProvider>

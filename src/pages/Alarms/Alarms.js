@@ -2,9 +2,9 @@ import { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-import AlarmsList from "../../organisms/AlarmsList";
-import AlarmsFilter from "../../organisms/AlarmsFilter";
-import { useAlarms } from "../../../alarmsContext";
+import AlarmsList from "./AlarmsList";
+import AlarmsFilter from "./AlarmsFilter";
+import { useAlarms } from "../../shell/alarmsContext";
 
 export default function AlarmsPage() {
   const { data: alarms, ...dispatchers } = useAlarms();

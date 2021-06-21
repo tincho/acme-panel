@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { useAlarms } from "../../../alarmsContext";
+import { useAlarms } from "../../shell/alarmsContext";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
