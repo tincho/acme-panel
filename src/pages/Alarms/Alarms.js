@@ -6,6 +6,13 @@ import AlarmsList from "./AlarmsList";
 import AlarmsFilter from "./AlarmsFilter";
 import { useAlarms } from "../../shell/alarmsContext";
 
+const showAlarm = (alarm, filters) => {
+  const { name, paused } = alarm;
+  const matchName =
+    filters.name === "" ? true : name.search(filters.name) !== -1;
+  const matchStatus = filters.paused === "" ? true : paused === filters.paused;
+  return matchName && matchStatus;
+};
 export default function AlarmsPage() {
   const { data: alarms, ...dispatchers } = useAlarms();
 
@@ -14,13 +21,7 @@ export default function AlarmsPage() {
     paused: "",
   });
 
-  const showAlarms = alarms.filter(({ name, paused }) => {
-    const matchName =
-      filters.name === "" ? true : name.search(filters.name) !== -1;
-    const matchStatus =
-      filters.paused === "" ? true : paused === filters.paused;
-    return matchName && matchStatus;
-  });
+  const showAlarms = alarms.filter(alarm => showAlarm(alarm, filters));
 
   return (
     <>

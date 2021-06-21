@@ -1,10 +1,8 @@
 import { rest } from "msw";
 
-import generateRandomAlarms from "./generateRandomAlarms";
-const randomAlarms = generateRandomAlarms({
-  min: 7,
-  max: 121,
-});
+import alarms from "./alarms.json";
+
+const randomAlarms = alarms.filter(() => parseInt(Math.random() * 2));
 
 export const handlers = [
   rest.get("/api/alarms", (_, res, ctx) => {

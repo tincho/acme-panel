@@ -36,8 +36,6 @@ export default function AlarmsList({
 }) {
   const classes = useStyles();
 
-  const actionBtns = { false: PauseBtn, true: ResumeBtn };
-
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="alarms list" size="small">
@@ -54,45 +52,15 @@ export default function AlarmsList({
           </TableRow>
         </TableHead>
         <TableBody>
-          {alarms.map(({ id, name, source, metric, trigger, paused }) => {
-            const ActionButton = actionBtns[paused];
-            const pause = () => onClickPause(id)
-            const resume = () => onClickResume(id)
-            const deleteItem = () => onClickDelete(id)
-            return (
-              <TableRow key={id}>
-                <TableCell component="th" scope="row">
-                  {name}
-                </TableCell>
-                <TableCell>{source}</TableCell>
-                <TableCell>{metric}</TableCell>
-                <TableCell>{trigger.join(" ")}</TableCell>
-                <TableCell>{capitalize(paused)}</TableCell>
-                <TableCell className={classes.actionsCol} size="small">
-                  <ActionButton
-                    onClickPause={pause}
-                    onClickResume={resume}
-                  />
-                  <IconButton
-                    size="small"
-                    title="Edit"
-                    aria-label="edit"
-                    disabled
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    title="Delete"
-                    aria-label="delete"
-                    onClick={deleteItem}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            );
-          })}
+          {alarms.map((alarm) => (
+            <AlarmRow
+              key={alarm.id}
+              {...alarm}
+              pause={() => onClickPause(alarm.id)}
+              resume={() => onClickResume(alarm.id)}
+              deleteItem={() => onClickDelete(alarm.id)}
+            />
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
@@ -103,6 +71,61 @@ AlarmsList.propTypes = {
   deleteAlarm: PropTypes.func,
   pauseAlarm: PropTypes.func,
   resumeAlarm: PropTypes.func,
+};
+
+const AlarmRow = React.memo(function AlarmRow({
+  pause,
+  resume,
+  deleteItem,
+  name,
+  source,
+  metric,
+  trigger,
+  paused,
+}) {
+  const classes = useStyles();
+  const actionBtns = { false: PauseBtn, true: ResumeBtn };
+  const ActionButton = actionBtns[paused];
+
+  return (
+    <TableRow>
+      <TableCell component="th" scope="row">
+        {name}
+      </TableCell>
+      <TableCell>{source}</TableCell>
+      <TableCell>{metric}</TableCell>
+      <TableCell>{trigger.join(" ")}</TableCell>
+      <TableCell>{capitalize(paused)}</TableCell>
+      <TableCell className={classes.actionsCol} size="small">
+        <ActionButton onClickPause={pause} onClickResume={resume} />
+        <IconButton size="small" title="Edit" aria-label="edit" disabled>
+          <EditIcon />
+        </IconButton>
+        <IconButton
+          size="small"
+          title="Delete"
+          aria-label="delete"
+          onClick={deleteItem}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </TableCell>
+    </TableRow>
+  );
+}, (prevProps, nextProps) => {
+  prevProps.id === nextProps.id
+});
+AlarmRow.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  source: PropTypes.string,
+  metric: PropTypes.string,
+  trigger: PropTypes.array,
+  paused: PropTypes.string,
+
+  pause: PropTypes.func,
+  resume: PropTypes.func,
+  deleteItem: PropTypes.func,
 };
 
 function PauseBtn({ onClickPause }) {

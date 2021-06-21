@@ -1,3 +1,8 @@
+// this is deprecated
+// I used this file before to generate the random response each time
+// saved one of them in a alarms.json file and pick random items from there
+// will leave it here just in case you want to check it out
+
 import faker from "faker";
 
 const randomItem = (collection) =>
