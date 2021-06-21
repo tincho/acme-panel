@@ -1,3 +1,2 @@
-import NotificationsBadge from "./NotificationsBadge"
-export default NotificationsBadge
-
+import NotificationsBadge from "./NotificationsBadge";
+export default NotificationsBadge;

@@ -63,7 +63,7 @@ export default function AlarmsList({
                 </TableCell>
                 <TableCell>{source}</TableCell>
                 <TableCell>{metric}</TableCell>
-                <TableCell>{trigger}</TableCell>
+                <TableCell>{trigger.join(" ")}</TableCell>
                 <TableCell>{capitalize(paused)}</TableCell>
                 <TableCell className={classes.actionsCol} size="small">
                   <ActionButton

@@ -5,8 +5,7 @@ export default function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"© "}
-      {new Date().getFullYear()}{" "}
-      {"with ❤ from "}
+      {new Date().getFullYear()} {"with ❤ from "}
       <small>
         <Link color="inherit" href="https://github.com/tincho/">
           <code>@mrtinsal</code>

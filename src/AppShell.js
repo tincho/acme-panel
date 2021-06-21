@@ -24,7 +24,7 @@ import NotificationsBadge from "./components/atoms/NotificationsBadge";
 import SidebarNav from "./components/molecules/SidebarNav";
 import Copyright from "./components/atoms/Copyright";
 
-import useNotifications from './useNotifications'
+import { useAlarms } from "./alarmsContext";
 
 const drawerWidth = 240;
 
@@ -110,19 +110,18 @@ export default function AppShell({ children }) {
   };
 
   const sidebarItems = [
-    { path: "/", text: "Dashboard", activeOnlyWhenExact: true, icon: <DashboardIcon /> },
+    {
+      path: "/",
+      text: "Dashboard",
+      activeOnlyWhenExact: true,
+      icon: <DashboardIcon />,
+    },
     { path: "/alarms", text: "Alarms", icon: <AssignmentIcon /> },
-  ]
+  ];
 
-  const pollNotificationsDelay = 5000
-  //   const pollNotificationsDelay = null
-  const { count: notificationsCount, delay, setDelay } = useNotifications(pollNotificationsDelay)
-  const toggleNotif = () => {
-    setDelay(delay === null ? pollNotificationsDelay : null)
-  }
-  const onClickNotifications = () => {
-    toggleNotif()
-  }
+  const alarms = useAlarms("data");
+
+  const activeAlarms = alarms.filter(({ paused }) => paused !== "true").length;
 
   return (
     <div className={classes.root}>
@@ -153,7 +152,7 @@ export default function AppShell({ children }) {
           >
             Amazing Center for Monitoring Everything
           </Typography>
-          <NotificationsBadge count={notificationsCount} onClick={onClickNotifications} />
+          <NotificationsBadge count={activeAlarms} />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -189,4 +188,3 @@ export default function AppShell({ children }) {
 AppShell.propTypes = {
   children: PropTypes.element,
 };
-

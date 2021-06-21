@@ -30,8 +30,8 @@ export default function SidebarNav({ subheaderText, items }) {
 
 SidebarNav.propTypes = {
   subheaderText: PropTypes.string,
-  items: PropTypes.array
-}
+  items: PropTypes.array,
+};
 
 function ListItemLink({ to, primary, icon, activeOnlyWhenExact }) {
   let match = useRouteMatch({

@@ -1,2 +1,2 @@
-import Copyright from './Copyright'
-export default Copyright
+import Copyright from "./Copyright";
+export default Copyright;

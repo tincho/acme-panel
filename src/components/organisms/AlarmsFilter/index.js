@@ -1,2 +1,2 @@
-import AlarmsFilter from "./AlarmsFilter"
-export default AlarmsFilter
+import AlarmsFilter from "./AlarmsFilter";
+export default AlarmsFilter;
