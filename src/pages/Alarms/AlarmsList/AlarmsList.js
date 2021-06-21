@@ -56,6 +56,9 @@ export default function AlarmsList({
         <TableBody>
           {alarms.map(({ id, name, source, metric, trigger, paused }) => {
             const ActionButton = actionBtns[paused];
+            const pause = () => onClickPause(id)
+            const resume = () => onClickResume(id)
+            const deleteItem = () => onClickDelete(id)
             return (
               <TableRow key={id}>
                 <TableCell component="th" scope="row">
@@ -67,9 +70,8 @@ export default function AlarmsList({
                 <TableCell>{capitalize(paused)}</TableCell>
                 <TableCell className={classes.actionsCol} size="small">
                   <ActionButton
-                    onClickPause={() => onClickPause(id)}
-                    onClickResume={() => onClickResume(id)}
-                    alarmId={id}
+                    onClickPause={pause}
+                    onClickResume={resume}
                   />
                   <IconButton
                     size="small"
@@ -83,7 +85,7 @@ export default function AlarmsList({
                     size="small"
                     title="Delete"
                     aria-label="delete"
-                    onClick={() => onClickDelete(id)}
+                    onClick={deleteItem}
                   >
                     <DeleteIcon />
                   </IconButton>

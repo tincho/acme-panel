@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppShell({ children }) {
+export default function Layout({ children }) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(true);
@@ -190,6 +190,6 @@ export default function AppShell({ children }) {
   );
 }
 
-AppShell.propTypes = {
+Layout.propTypes = {
   children: PropTypes.element,
 };
