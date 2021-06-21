@@ -25,8 +25,9 @@ export default function useNotifications(initialDelay) {
   let [delay, setDelay] = useState(initialDelay);
 
   useInterval(() => {
-    const newCount =   parseInt(Math.random() * 200);
-    setCount(newCount);
+    const newCount =   parseInt(Math.random() * 114);
+    setCount(newCount)
+    // fetch('/api/alarms/count').then(res => res.text()).then(newCount => setCount(newCount))
   }, delay);
 
   return { count, delay, setDelay }

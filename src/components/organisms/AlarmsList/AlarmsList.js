@@ -38,8 +38,6 @@ export default function AlarmsList({
 
   const actionBtns = { false: PauseBtn, true: ResumeBtn };
 
-  const showAlarms = alarms.filter(() => true); // to be implemented
-
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="alarms list" size="small">
@@ -56,7 +54,7 @@ export default function AlarmsList({
           </TableRow>
         </TableHead>
         <TableBody>
-          {showAlarms.map(({ id, name, source, metric, trigger, paused }) => {
+          {alarms.map(({ id, name, source, metric, trigger, paused }) => {
             const ActionButton = actionBtns[paused];
             return (
               <TableRow key={id}>

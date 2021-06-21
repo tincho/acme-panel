@@ -1,4 +1,4 @@
-import { useReducer } from "react"
+import { useReducer, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
@@ -11,25 +11,39 @@ const randomAlarms = generateRandomAlarms();
 
 export default function AlarmsPage() {
   const [alarms, dispatch] = useReducer(alarmsReducer, randomAlarms);
+  const [filters, setFilters] = useState({
+    name: "",
+    paused: "",
+  });
 
   const dispatchers = {
     deleteAlarm: (id) => dispatch({ type: "delete", payload: id }),
     pauseAlarm: (id) => dispatch({ type: "pause", payload: id }),
     resumeAlarm: (id) => dispatch({ type: "resume", payload: id }),
-  }
+  };
+
+  const showAlarms = alarms.filter(({ name, paused }) => {
+    const matchName =
+      filters.name === "" ? true : name.search(filters.name) !== -1;
+    const matchStatus =
+      filters.paused === "" ? true : paused === filters.paused;
+    return matchName && matchStatus;
+  });
 
   return (
     <>
       <Grid item xs={12}>
-        <AlarmsFilter alarms={alarms} />
+        <AlarmsFilter applyFilters={setFilters} />
       </Grid>
       <Grid item xs={12}>
-        <AlarmsList alarms={alarms} {...dispatchers} />
+        <AlarmsList alarms={showAlarms} {...dispatchers} />
       </Grid>
-      <Grid item>
-        <Fab color="primary" aria-label="add">
-          <AddIcon />
-        </Fab>
+      <Grid container direction="row" justify="flex-end">
+        <Grid item>
+          <Fab color="primary" aria-label="add" disabled>
+            <AddIcon />
+          </Fab>
+        </Grid>
       </Grid>
     </>
   );
