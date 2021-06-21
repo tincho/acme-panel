@@ -1,13 +1,9 @@
 import { createContext, useContext, useReducer } from "react";
 import PropTypes from "prop-types";
-import generateRandomAlarms from "./generateRandomAlarms";
-const randomAlarms = generateRandomAlarms({
-  min: 7,
-  max: 121,
-});
 
 const value = {
   data: [],
+  loadAlarms: () => {},
   deleteAlarm: () => {},
   pauseAlarm: () => {},
   resumeAlarm: () => {},
@@ -16,9 +12,10 @@ const value = {
 const AlarmsContext = createContext(value);
 
 export function AlarmsProvider({ children }) {
-  const [data, dispatch] = useReducer(alarmsReducer, randomAlarms);
+  const [data, dispatch] = useReducer(alarmsReducer, []);
 
   const dispatchers = {
+    loadAlarms: (payload) => dispatch({ type: "load", payload }),
     deleteAlarm: (id) => dispatch({ type: "delete", payload: id }),
     pauseAlarm: (id) => dispatch({ type: "pause", payload: id }),
     resumeAlarm: (id) => dispatch({ type: "resume", payload: id }),
@@ -42,6 +39,7 @@ AlarmsProvider.propTypes = {
 function alarmsReducer(prevState, { type, payload }) {
   const identity = (a) => a;
   const actions = {
+    load: () => payload,
     delete: (state) => state.filter(({ id }) => id !== payload),
     pause: (state) =>
       state.map(({ paused, ...item }) => ({

@@ -119,9 +119,14 @@ export default function AppShell({ children }) {
     { path: "/alarms", text: "Alarms", icon: <AssignmentIcon /> },
   ];
 
-  const alarms = useAlarms("data");
+  const { data, loadAlarms } = useAlarms();
+  React.useEffect(() => {
+    fetch("/api/alarms")
+      .then((res) => res.json())
+      .then(loadAlarms);
+  }, []);
 
-  const activeAlarms = alarms.filter(({ paused }) => paused !== "true").length;
+  const activeAlarms = data.filter(({ paused }) => paused !== "true").length;
 
   return (
     <div className={classes.root}>

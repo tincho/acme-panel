@@ -98,9 +98,9 @@ export default function AlarmsList({
 }
 AlarmsList.propTypes = {
   alarms: PropTypes.arrayOf(PropTypes.object),
-  deleteAlarm: PropTypes.function,
-  pauseAlarm: PropTypes.function,
-  resumeAlarm: PropTypes.function,
+  deleteAlarm: PropTypes.func,
+  pauseAlarm: PropTypes.func,
+  resumeAlarm: PropTypes.func,
 };
 
 function PauseBtn({ onClickPause }) {
@@ -111,7 +111,7 @@ function PauseBtn({ onClickPause }) {
   );
 }
 PauseBtn.propTypes = {
-  onClickPause: PropTypes.function,
+  onClickPause: PropTypes.func,
 };
 
 function ResumeBtn({ onClickResume }) {
@@ -122,7 +122,7 @@ function ResumeBtn({ onClickResume }) {
   );
 }
 ResumeBtn.propTypes = {
-  onClickResume: PropTypes.function,
+  onClickResume: PropTypes.func,
 };
 
 function capitalize(str) {

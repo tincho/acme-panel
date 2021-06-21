@@ -86,10 +86,10 @@ export default function AlarmsFilter({ applyFilters }) {
             <em>Any</em>
           </MenuItem>
           <MenuItem value={"true"} selected={filters.paused === "true"}>
-            True
+            Paused
           </MenuItem>
           <MenuItem value={"false"} selected={filters.paused === "false"}>
-            False
+            Running
           </MenuItem>
         </Select>
       </FormControl>
@@ -106,5 +106,5 @@ export default function AlarmsFilter({ applyFilters }) {
 }
 
 AlarmsFilter.propTypes = {
-  applyFilters: PropTypes.function,
+  applyFilters: PropTypes.func,
 };
