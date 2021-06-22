@@ -21,7 +21,7 @@ export default function AlarmsPage() {
     paused: "",
   });
 
-  const showAlarms = alarms.filter(alarm => showAlarm(alarm, filters));
+  const showAlarms = alarms.filter((alarm) => showAlarm(alarm, filters));
 
   return (
     <>

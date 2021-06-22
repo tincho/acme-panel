@@ -9,9 +9,9 @@ import { AlarmsProvider } from "./shell/alarmsContext";
 import defaultTheme from "./shell/theme";
 import Layout from "./shell/Layout";
 
+import NotFound from "./pages/NotFound";
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Alarms = lazy(() => import("./pages/Alarms"));
-import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -20,32 +20,40 @@ function App() {
         <Router>
           <AlarmsProvider>
             <Layout>
-              <Suspense
-                fallback={
-                  <div
-                    style={{
-                      height: "100%",
-                      width: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <CircularProgress />
-                  </div>
-                }
-              >
-                <Switch>
-                  <Route path="/" component={Dashboard} exact />
-                  <Route path="/alarms" component={Alarms} />
-                  <Route component={NotFound} />
-                </Switch>
+              <Suspense fallback={<Loading />}>
+                <Content />
               </Suspense>
             </Layout>
           </AlarmsProvider>
         </Router>
       </ThemeProvider>
+    </div>
+  );
+}
+
+function Content() {
+  return (
+    <Switch>
+      <Route path="/" component={Dashboard} exact />
+      <Route path="/alarms" component={Alarms} />
+      <Route component={NotFound} />
+    </Switch>
+  );
+}
+
+function Loading() {
+  return (
+    <div
+      style={{
+        height: "60vh",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <CircularProgress />
     </div>
   );
 }

@@ -73,48 +73,51 @@ AlarmsList.propTypes = {
   resumeAlarm: PropTypes.func,
 };
 
-const AlarmRow = React.memo(function AlarmRow({
-  pause,
-  resume,
-  deleteItem,
-  name,
-  source,
-  metric,
-  trigger,
-  paused,
-}) {
-  const classes = useStyles();
-  const actionBtns = { false: PauseBtn, true: ResumeBtn };
-  const ActionButton = actionBtns[paused];
+const AlarmRow = React.memo(
+  function AlarmRow({
+    pause,
+    resume,
+    deleteItem,
+    name,
+    source,
+    metric,
+    trigger,
+    paused,
+  }) {
+    const classes = useStyles();
+    const actionBtns = { false: PauseBtn, true: ResumeBtn };
+    const ActionButton = actionBtns[paused];
 
-  return (
-    <TableRow>
-      <TableCell component="th" scope="row">
-        {name}
-      </TableCell>
-      <TableCell>{source}</TableCell>
-      <TableCell>{metric}</TableCell>
-      <TableCell>{trigger.join(" ")}</TableCell>
-      <TableCell>{capitalize(paused)}</TableCell>
-      <TableCell className={classes.actionsCol} size="small">
-        <ActionButton onClickPause={pause} onClickResume={resume} />
-        <IconButton size="small" title="Edit" aria-label="edit" disabled>
-          <EditIcon />
-        </IconButton>
-        <IconButton
-          size="small"
-          title="Delete"
-          aria-label="delete"
-          onClick={deleteItem}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </TableCell>
-    </TableRow>
-  );
-}, (prevProps, nextProps) => {
-  prevProps.id === nextProps.id
-});
+    return (
+      <TableRow>
+        <TableCell component="th" scope="row">
+          {name}
+        </TableCell>
+        <TableCell>{source}</TableCell>
+        <TableCell>{metric}</TableCell>
+        <TableCell>{trigger.join(" ")}</TableCell>
+        <TableCell>{capitalize(paused)}</TableCell>
+        <TableCell className={classes.actionsCol} size="small">
+          <ActionButton onClickPause={pause} onClickResume={resume} />
+          <IconButton size="small" title="Edit" aria-label="edit" disabled>
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            size="small"
+            title="Delete"
+            aria-label="delete"
+            onClick={deleteItem}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </TableCell>
+      </TableRow>
+    );
+  },
+  (prevProps, nextProps) => {
+    prevProps.id === nextProps.id;
+  }
+);
 AlarmRow.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
