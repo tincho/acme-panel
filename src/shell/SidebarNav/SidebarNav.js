@@ -33,13 +33,8 @@ SidebarNav.propTypes = {
   items: PropTypes.array,
 };
 
-function ListItemLink({ to, primary, icon, activeOnlyWhenExact }) {
-  let match = useRouteMatch({
-    path: to,
-    exact: activeOnlyWhenExact,
-  });
-
-  const CustomLink = React.useMemo(
+const useCustomLink = (to) =>
+  React.useMemo(
     () =>
       // eslint-disable-next-line react/display-name
       React.forwardRef((linkProps, ref) => (
@@ -47,6 +42,15 @@ function ListItemLink({ to, primary, icon, activeOnlyWhenExact }) {
       )),
     [to]
   );
+
+function ListItemLink({ to, primary, icon, activeOnlyWhenExact }) {
+  let match = useRouteMatch({
+    path: to,
+    exact: activeOnlyWhenExact,
+  });
+
+  const CustomLink = useCustomLink(to);
+
   return (
     <ListItem button component={CustomLink} selected={!!match}>
       <ListItemIcon>{icon}</ListItemIcon>
