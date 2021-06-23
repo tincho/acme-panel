@@ -23,5 +23,7 @@ describe("Alarms Context", () => {
       it("reducer: pauseAlarm", () => {});
       it("reducer: resumeAlarm", () => {});
     });
+
+    describe("useFetchAlarms", () => {});
   });
 });

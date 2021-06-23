@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,7 +24,7 @@ import NotificationsBadge from "../NotificationsBadge";
 import SidebarNav from "../SidebarNav";
 import Copyright from "../Copyright";
 
-import { useAlarms } from "../alarmsContext";
+import { useFetchAlarms } from "../alarmsContext";
 
 const drawerWidth = 240;
 
@@ -98,21 +98,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const useFetchAlarms = () => {
-  const { data, loadAlarms } = useAlarms();
-  React.useEffect(async () => {
-    const alarms = await (await fetch("./alarms.json")).json();
-    const randomAlarms = alarms.filter(() => parseInt(Math.random() * 2));
-    loadAlarms(randomAlarms);
-  }, []);
-
-  return data;
-};
-
 export default function Layout({ children }) {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };

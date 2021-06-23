@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 
 const value = {
@@ -64,6 +64,17 @@ export const useAlarms = (selector) => {
     return ctx[selector];
   }
   return ctx;
+};
+
+export const useFetchAlarms = () => {
+  const { data, loadAlarms } = useAlarms();
+  useEffect(async () => {
+    const alarms = await (await fetch("./alarms.json")).json();
+    const randomAlarms = alarms.filter(() => parseInt(Math.random() * 2));
+    loadAlarms(randomAlarms);
+  }, []);
+
+  return data;
 };
 
 export default { AlarmsContext, AlarmsProvider, useAlarms };
