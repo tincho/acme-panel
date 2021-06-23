@@ -7,8 +7,8 @@ console.log(AlarmsProvider, useAlarms);
 describe("Alarms Context", () => {
   describe("AlarmsContext", () => {
     it("is a context :)", () => {
-      expect(AlarmsContext.Provider).toBeDefined()
-      expect(AlarmsContext.Consumer).toBeDefined()
+      expect(AlarmsContext.Provider).toBeDefined();
+      expect(AlarmsContext.Consumer).toBeDefined();
     });
   });
 
@@ -16,12 +16,12 @@ describe("Alarms Context", () => {
     it("passes data", () => {});
     it("passes dispatchers", () => {});
     describe("useAlarms", () => {
-      it("gets data - no selector", () => {})
-      it("gets data - with selector", () => {})
-      it("reducer: loadAlarms", () => {})
-      it("reducer: deleteAlarm", () => {})
-      it("reducer: pauseAlarm", () => {})
-      it("reducer: resumeAlarm", () => {})
+      it("gets data - no selector", () => {});
+      it("gets data - with selector", () => {});
+      it("reducer: loadAlarms", () => {});
+      it("reducer: deleteAlarm", () => {});
+      it("reducer: pauseAlarm", () => {});
+      it("reducer: resumeAlarm", () => {});
     });
   });
 });

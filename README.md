@@ -12,6 +12,10 @@ Once those conditions are met, the backend will turn that alarm on and notify al
 
 Alarms cannot be turned off as they automatically shut down once the system status changes and the trigger conditions are not met anymore
 
+## Demo
+
+There's live demo built and deployed automatically at [https://acme-panel.vercel.app](https://acme-panel.vercel.app)
+
 ## Conventions
 
 * Using [Semantic Commit Messages](https://www.conventionalcommits.org/en/v1.0.0/)
