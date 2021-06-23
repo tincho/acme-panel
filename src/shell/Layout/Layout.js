@@ -98,6 +98,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const useFetchAlarms = () => {
+
+  const { data, loadAlarms } = useAlarms();
+  React.useEffect(async () => {
+    const alarms = await (await fetch("./alarms.json")).json()
+    const randomAlarms = alarms.filter(() => parseInt(Math.random() * 2));
+    loadAlarms(randomAlarms);
+  }, []);
+  
+  return data
+}
+
+
 export default function Layout({ children }) {
   const classes = useStyles();
 
@@ -119,14 +132,8 @@ export default function Layout({ children }) {
     { path: "/alarms", text: "Alarms", icon: <AssignmentIcon /> },
   ];
 
-  const { data, loadAlarms } = useAlarms();
-  React.useEffect(() => {
-    fetch("/api/alarms")
-      .then((res) => res.json())
-      .then(loadAlarms);
-  }, []);
-
-  const activeAlarms = data.filter(({ paused }) => paused !== "true").length;
+  const data = useFetchAlarms()
+  const activeAlarms = data.filter(({ paused }) => paused !== "true").length
 
   return (
     <div className={classes.root}>
