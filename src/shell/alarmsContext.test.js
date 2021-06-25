@@ -73,7 +73,7 @@ describe("Alarms Context", () => {
             </div>
           );
         };
-        afterEach(cleanup)
+        afterEach(cleanup);
         it("reducer: loadAlarms", () => {
           const { getByText, getByTestId } = render(
             <AlarmsProvider>
